@@ -1,0 +1,13 @@
+import keyboard
+
+recording = false
+pressedKey = none
+
+def recordKey
+    if pressedKey = "R"
+        recording = True
+
+Listener for keyboard ...
+
+
+
