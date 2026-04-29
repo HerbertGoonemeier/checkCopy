@@ -1,13 +1,47 @@
-import keyboard
+#INPUT/imports
+	>mouse
+	>keyboard
+	>time
 
-recording = false
-pressedKey = none
+#VAR
+	>record = FALSE
+	>copy = FALSE
+	>clickPos[]
+	>clickIndex
 
-def recordKey
-    if pressedKey = "R"
-        recording = True
+#listener mouse/Keyboard
+	>Listener.keyboard
+		>if input = F9  #record Mode
+			>record =!
+			>copy = FALSE
+			>print("zum neu kalibrieren klicken")
+		>else if Input = F10 #CopyMode
+			>copy =!
+			>record =FALSE
+		>else
+			>print("error ... false INPUT")
 
-Listener for keyboard ...
+	>listener.mouse
+		>if record = true
+			>clickPos[clickIndex] = mouse(x)
+			>clickIndex = (clickIndex + 1) % 2
+			>print("x_1 bei ", clickPos[0])
+			>print("x_2 bei ", clickPos[1])
+            >record = FALSE
+		>else
+			>print("listener.mouse not starting") #debug msg
 
+if copy = true
+	>copyClicks(clickY)
 
+>else if copy && record
+	>print("error: copy && record : TRUE") #just debugging info
+>else
+	>print("copy && record : FALSE") # just debugging info
 
+def copyClicks(): #copy tha actual click with x-offset 1(d_x_1) and x-offset 2(d_x_2)
+	>for i=0; 1
+		>mouse.controller(clickPos[0],mouse.input(Y))
+		>print("click gesetzt bei",clickPos[0],"/",mouse.input(Y))
+
+	
